@@ -23,6 +23,8 @@ let totalEmpHours = 0;
 let totalWorkingDays = 0;
 let empDailyWageArray = new Array();
 let empDailyHrsMap = new Map();
+let empDailyHrsAndWageArr = new Array();
+
 while (
   totalEmpHours <= MAX_HRS_IN_MONTH &&
   totalWorkingDays < NUM_OF_WORKING_DAYS
@@ -33,7 +35,19 @@ while (
   totalEmpHours += empHours;
   empDailyHrsMap.set(totalWorkingDays, empHours);
   empDailyWageArray.push(calculateWage(empHours));
+  empDailyHrsAndWageArr.push({
+    dayNum: totalWorkingDays,
+    dayHours: empHours,
+    dailyWage: calculateWage(empHours),
+    toString() {
+      return `Day ${this.dayNum} => Working Hours is ${this.dayHours} And Wage Earned = ${this.dailyWage}\n`;
+    },
+  });
 }
+// printing daily wage using object
+console.log(
+  "Showing daily worked hours and daily earned= \n" + empDailyHrsAndWageArr
+);
 
 //using arrow function
 let totalEmpWage = 0;
@@ -48,12 +62,12 @@ console.log(
   "Emp Wage using Arrow: Total Hours " + totalHrs + " Total Wage " + totalSalary
 );
 
-//9b- show day along daily wage
+//10b- show day along daily wage
 
 console.log("Daily Wage Map");
 console.log(empDailyHrsMap);
 
-//9c - Show days full time wage
+//10c - Show days full time wage
 function fullTimeWage(dailyWage) {
   return dailyWage == 8;
 }
@@ -61,7 +75,7 @@ let fullDayWageArr = Array.from(empDailyHrsMap.values()).filter(fullTimeWage);
 console.log("Daily Wage Filter With Full Time");
 console.log(fullDayWageArr);
 
-//9d - Find first occurence of full time wage
+//10d - Find first occurence of full time wage
 function findFullTimeWage(dailyWage) {
   return dailyWage == 8;
 }
@@ -69,7 +83,7 @@ let firstDay =
   Array.from(empDailyHrsMap.values()).findIndex(findFullTimeWage) + 1;
 console.log("First time employee worked full time: " + firstDay);
 
-//9e - check every full time wage is truely holding full time wage
+//10e - check every full time wage is truely holding full time wage
 function isAllFullTimeWage(dailyWage) {
   return dailyWage == 8;
 }
@@ -78,7 +92,7 @@ console.log(
     fullDayWageArr.every(isAllFullTimeWage)
 );
 
-//9f - check if there is any part time wage
+//10f - check if there is any part time wage
 function isAnypartTime(dailyWage) {
   return dailyWage == 4;
 }
@@ -87,7 +101,7 @@ console.log(
     Array.from(empDailyHrsMap.values()).some(isAnypartTime)
 );
 
-//9g - Find number of days employee worked
+//10g - Find number of days employee worked
 function totalDaysWorked(numberOfDays, dailyWage) {
   if (dailyWage > 0) {
     return numberOfDays + 1;
